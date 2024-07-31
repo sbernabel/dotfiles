@@ -1,0 +1,1 @@
+/home/silvano/dotfiles/.tmux
