@@ -87,8 +87,6 @@ export PATH=$PATH:/usr/local/go/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 export VERSION_CONTROL=numbered
-source "$HOME/.cargo/env"
-
 #
 # Powerline settings
 
@@ -137,3 +135,24 @@ function neovim() {
 #    fi
 #}
 
+function startwebui() {
+    docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 99102007e495
+}
+
+function npve() {
+    if [ $# -eq 0 ]; then
+        echo npve myenv
+    else
+        python3 -m venv $1
+    fi
+}
+
+function apve() {
+    if [ $# -eq 0 ]; then
+        echo apve myenv
+    else
+        source $1/bin/activate
+    fi
+}
+
+. "$HOME/.cargo/env"

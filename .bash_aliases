@@ -1,5 +1,4 @@
 alias tm='tmux'
-alias tms='tmux-sessionizer'
 alias nv='neovim'
 alias ll='ls -haltr'
 alias grep='grep --color=auto'
@@ -12,5 +11,5 @@ alias diff='colordiff'
 alias python='python3.12'
 alias python3='python3.12'
 alias sp='space'
-alias pyve='source .venv/bin/activate'
+alias deact='deactivate'
 
