@@ -78,7 +78,7 @@ fi
 export EDITOR=nvim
 
 # Prompt
-export PS1="\u@\h:\w\\$ "
+export PS1="\u@\h:\w\n\$ "
 
 # Path
 export PATH=$PATH:~/.local/bin
