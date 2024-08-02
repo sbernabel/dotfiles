@@ -82,27 +82,26 @@ export PS1="\u@\h:\w\n\$ "
 
 # Path
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/.scripts
 export PATH=$PATH:/usr/local/go/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 export VERSION_CONTROL=numbered
+##
+## Powerline settings
 #
-# Powerline settings
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#
+#if [ -f $HOME/.local/lib/python3.12/site-packages/powerline/bindings/bash/powerline.sh ]; then
+#    $HOME/.local/bin/powerline-daemon -q
+#    source $HOME/.local/lib/python3.12/site-packages/powerline/bindings/bash/powerline.sh
+#fi
+#
+#export TMUX_POWERLINE_THEME="default0"
+#export TMUX_POWERLINE_DIR_USER_SEGMENTS="default0"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-if [ -f $HOME/.local/lib/python3.12/site-packages/powerline/bindings/bash/powerline.sh ]; then
-    $HOME/.local/bin/powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    source $HOME/.local/lib/python3.12/site-packages/powerline/bindings/bash/powerline.sh
-fi
-
-export TMUX_POWERLINE_THEME="default0"
-export TMUX_POWERLINE_DIR_USER_SEGMENTS="default0"
+eval "$(oh-my-posh init bash --config $HOME/.config/omp/themes/atomic.omp.json)"
 
 
 ### Functions
@@ -155,4 +154,30 @@ function apve() {
     fi
 }
 
+function clear_screen_if_needed() {
+    # Get terminal size
+    local lines=$(tput lines)
+    if [[ ! "$lines" =~ ^[0-9]+$ ]]; then
+        return  # Exit if lines is not a number
+    fi
+
+    local threshold=$((lines * 80 / 100))  # 80% of total lines
+    
+    # Count non-empty lines
+    local used_lines=$(tput cup "$lines" 0 && tput ed | grep -c .)
+
+    # Clear if used lines exceed threshold
+    if [[ "$used_lines" =~ ^[0-9]+$ ]] && [ "$used_lines" -gt "$threshold" ]; then
+        clear
+    fi
+}
+
+
+# sourcing 
 . "$HOME/.cargo/env"
+
+
+
+
+
+
