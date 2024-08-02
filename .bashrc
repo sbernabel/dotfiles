@@ -138,6 +138,7 @@ function startwebui() {
     docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 99102007e495
 }
 
+# python virtual environment shorthands
 function npve() {
     if [ $# -eq 0 ]; then
         echo npve myenv
@@ -151,24 +152,6 @@ function apve() {
         echo apve myenv
     else
         source $1/bin/activate
-    fi
-}
-
-function clear_screen_if_needed() {
-    # Get terminal size
-    local lines=$(tput lines)
-    if [[ ! "$lines" =~ ^[0-9]+$ ]]; then
-        return  # Exit if lines is not a number
-    fi
-
-    local threshold=$((lines * 80 / 100))  # 80% of total lines
-    
-    # Count non-empty lines
-    local used_lines=$(tput cup "$lines" 0 && tput ed | grep -c .)
-
-    # Clear if used lines exceed threshold
-    if [[ "$used_lines" =~ ^[0-9]+$ ]] && [ "$used_lines" -gt "$threshold" ]; then
-        clear
     fi
 }
 
